@@ -29,7 +29,7 @@ async function refreshToken() {
 async function getSpotifySong() {
     const d = await axios.get("https://api.spotify.com/v1/me/player/currently-playing?market=US", {headers: {Authorization: `Bearer ${access_token}`}})
     const songData: CurrentSession = d.data;
-    const resData = d.data === "" ? { track: "none", artist: "none" } : { track: songData.item.name, artist: songData.item.artists[0].name };
+    const resData = d.data === "" ? { track: "none", artist: "none", is_playing: false } : { track: songData.item.name, artist: songData.item.artists[0].name, is_playing: songData.is_playing };
     return resData;
 }
 
