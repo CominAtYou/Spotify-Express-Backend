@@ -1,0 +1,29 @@
+{
+  "name": "websitebackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CominAtYou/WebsiteBackend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CominAtYou/WebsiteBackend/issues"
+  },
+  "homepage": "https://github.com/CominAtYou/WebsiteBackend#readme",
+  "dependencies": {
+    "@types/express": "^4.17.12",
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "form-urlencoded": "^6.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.4",
+    "@types/spotify-web-api-node": "^5.0.2"
+  }
+}
