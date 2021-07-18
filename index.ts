@@ -4,6 +4,7 @@ import express = require('express');
 import h = require('axios');
 const axios = h.default;
 const app = express();
+const PORT = 8001;
 
 const config: { refresh_token: string, client_id: string, client_secret: string; } = require('./config.json');
 
@@ -53,20 +54,20 @@ async function updateSpotifySong() {
     }
 }
 
-setInterval(() => {
-    refreshToken();
-}, 3600000);
+// refresh the token every hour
+setInterval(refreshToken, 60 * 60 * 1000);
 refreshToken();
 
-setInterval(() => {
-    updateSpotifySong();
-}, 5000);
-updateSpotifySong();
+// update the song every 5 seconds
+setInterval(updateSpotifySong, 5 * 1000);
+// not calling updateSpotifySong() here because it fails the first time it is called (possible race condition?)
 
 app.get('/spotify', async (_req, res) => {
     res.status(200);
     res.send(JSON.stringify(currentTrackDetails));
 });
 
-app.listen(8001);
-console.log("Ready");
+app.listen(PORT);
+
+// print "Ready" and the port the app is running on.
+console.log(`Ready on port ${PORT}`);
