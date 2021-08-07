@@ -15,5 +15,5 @@ Once you've done that, create a file called `config.json` in the project root. I
 }
 ```
 
-Once you've done that, compile the TypeScript and run. You should be all set.
+Once you've done that, compile the TypeScript and run. You should be all set. Your data should now be accessable at localhost:8001 via HTTP.
   
