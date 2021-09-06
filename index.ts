@@ -64,6 +64,7 @@ setInterval(updateSpotifySong, 5 * 1000);
 
 app.get('/spotify', async (_req, res) => {
     res.status(200);
+    res.setHeader('content-type', 'application/json');
     res.send(JSON.stringify(currentTrackDetails));
 });
 
