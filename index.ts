@@ -62,10 +62,17 @@ refreshToken();
 setInterval(updateSpotifySong, 5 * 1000);
 // not calling updateSpotifySong() here because it fails the first time it is called (possible race condition?)
 
-app.get('/spotify', async (_req, res) => {
+app.get('/spotify', async (req, res) => {
     res.status(200);
+    if ((/^(.*\.)?(cominatyou\.com)$/).test(req.get(origin))) {
+        res.setHeader("Access-Control-Allow-Origin", req.get('origin'));
+    }
     res.setHeader('content-type', 'application/json');
     res.json(currentTrackDetails);
+});
+
+app.get('/silverpoint/updates', (_req, res) => {
+    res.sendFile("/home/willi/Yamanashi/Documents/Random Stuff/SilverpointUpdateData.json");
 });
 
 app.listen(PORT);
