@@ -1,7 +1,9 @@
-import { CurrentSession } from './CurrentSession';
+import CurrentSession from './lib/interfaces/CurrentSession';
 import formUrlEncoded = require('form-urlencoded');
 import express = require('express');
 import h = require('axios');
+import SpotifyResponse from './lib/interfaces/SpotifyResponse';
+import CurrentTrackDetails from './lib/interfaces/CurrentTrackDetails';
 const axios = h.default;
 const app = express();
 const PORT = 8001;
@@ -11,26 +13,11 @@ const config: { refresh_token: string, client_id: string, client_secret: string;
 const refresh_token = config.refresh_token;
 let access_token: string;
 
-interface CurrentTrackDetails {
-    track: string;
-    artist: string;
-    is_playing: boolean;
-}
-
-interface SpotifyResponse {
-    access_token: string,
-    token_type: string,
-    expires_in: number,
-    refresh_token: string,
-    scope: string,
-    error?: string,
-    error_description?: string;
-}
-
-let currentTrackDetails: CurrentTrackDetails = {
+const currentTrackDetails: CurrentTrackDetails = {
     track: null,
     artist: null,
     is_playing: false,
+    track_url: null
 };
 
 async function refreshToken() {
@@ -46,11 +33,14 @@ async function updateSpotifySong() {
         currentTrackDetails.track = null;
         currentTrackDetails.artist = null;
         currentTrackDetails.is_playing = false;
+        currentTrackDetails.track_url = null;
+
     }
     else {
         currentTrackDetails.track = songData.item.name;
         currentTrackDetails.artist = songData.item.artists[0].name;
         currentTrackDetails.is_playing = songData.is_playing;
+        currentTrackDetails.track_url = songData.item.external_urls.spotify;
     }
 }
 

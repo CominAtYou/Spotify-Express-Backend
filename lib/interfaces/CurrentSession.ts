@@ -1,4 +1,4 @@
-﻿export interface CurrentSession {
+﻿export default interface CurrentSession {
   context: Context;
   timestamp: number;
   progress_ms: number;
