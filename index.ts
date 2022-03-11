@@ -54,7 +54,7 @@ setInterval(updateSpotifySong, 5 * 1000);
 
 app.get('/spotify', async (req, res) => {
     if ((/^https?:\/\/(.*\.)?(cominatyou\.com)$/).test(req.headers.origin)) {
-        res.setHeader("Access-Control-Allow-Origin", req.get(req.headers.origin));
+        res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
     }
     res.setHeader('Content-Type', 'application/json');
     res.json(currentTrackDetails);
