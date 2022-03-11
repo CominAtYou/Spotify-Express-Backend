@@ -53,11 +53,10 @@ setInterval(updateSpotifySong, 5 * 1000);
 // not calling updateSpotifySong() here because it fails the first time it is called (possible race condition?)
 
 app.get('/spotify', async (req, res) => {
-    res.status(200);
-    if ((/^(.*\.)?(cominatyou\.com)$/).test(req.get(origin))) {
-        res.setHeader("Access-Control-Allow-Origin", req.get('origin'));
+    if ((/^https?:\/\/(.*\.)?(cominatyou\.com)$/).test(req.headers.origin)) {
+        res.setHeader("Access-Control-Allow-Origin", req.get(req.headers.origin));
     }
-    res.setHeader('content-type', 'application/json');
+    res.setHeader('Content-Type', 'application/json');
     res.json(currentTrackDetails);
 });
 
