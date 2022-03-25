@@ -53,7 +53,7 @@ setInterval(updateSpotifySong, 5 * 1000);
 // not calling updateSpotifySong() here because it fails the first time it is called (possible race condition?)
 
 app.get('/spotify', async (req, res) => {
-    if ((/^https?:\/\/(.*\.)?(cominatyou\.com)$/).test(req.headers.origin)) {
+    if ((/^https?:\/\/(.*\.)?cominatyou\.com$/).test(req.headers.origin)) {
         res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
     }
     res.setHeader('Content-Type', 'application/json');
@@ -63,6 +63,10 @@ app.get('/spotify', async (req, res) => {
 app.get('/silverpoint/updates', (_req, res) => {
     res.sendFile("/home/willi/Yamanashi/Documents/Random Stuff/SilverpointUpdateData.json");
 });
+
+app.get('/startlock', (_req, res) => {
+    res.sendFile("/home/willi/annoyance/resp.txt");
+})
 
 app.listen(PORT);
 
