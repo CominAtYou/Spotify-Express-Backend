@@ -1,4 +1,4 @@
 /config.json
-/CurrentSession.js
-/index.js
+*.js
+*.js.map
 /node_modules
