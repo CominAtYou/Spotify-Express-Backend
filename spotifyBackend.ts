@@ -10,14 +10,23 @@ let currentTrackDetails: CurrentTrackDetails = {
     track_url: null,
 }
 
-export default async function spotifyBackend(req: Request, res: Response) {
-    setInterval(refreshToken, 60 * 60 * 1000);
-    await refreshToken();
+let lastUpdated: number = null;
+let tokenLastRefreshed: number = null;
 
-    setInterval(async () => {
+export default async function spotifyBackend(req: Request, res: Response) {
+    const now = new Date().getTime();
+
+    if (tokenLastRefreshed === null || now - tokenLastRefreshed > 60 * 60 * 1000) {
+        console.log("[SPOTIFY] Access token was refreshed");
+        await refreshToken();
+        tokenLastRefreshed = now;
+    }
+
+    if (lastUpdated === null || now - lastUpdated > 5000) {
+        console.log("[SPOTIFY] Updated playback state");
         currentTrackDetails = await updateSpotifySong();
-    }, 5 * 1000);
-    currentTrackDetails = await updateSpotifySong();
+        lastUpdated = now;
+    }
 
     if ((/^https?:\/\/(.*\.)?cominatyou\.com$/).test(req.headers.origin)) {
         res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
